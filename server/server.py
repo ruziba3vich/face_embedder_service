@@ -2,8 +2,9 @@
 
 from concurrent import futures
 import grpc
-import embed_pb2
-import embed_pb2_grpc
+from face_recognition_protos import embed_pb2
+from face_recognition_protos import embed_pb2_grpc
+
 from embedder import FaceEmbedder
 
 class EmbedService(embed_pb2_grpc.FaceEmbedderServicer):
@@ -18,7 +19,7 @@ def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=4))
     embed_pb2_grpc.add_FaceEmbedderServicer_to_server(EmbedService(), server)
     server.add_insecure_port('[::]:7178')
-    print("🚀 Embedding service running at :7178")
+    print("Embedding service running at :7178")
     server.start()
     server.wait_for_termination()
 
